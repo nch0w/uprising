@@ -6,7 +6,7 @@ function execute(message, args, user) {
     return message.channel.send("There is already a game in this channel.");
   } else {
     games[message.channel.id] = {
-      players: [],
+      players: [], // {country: "", id: "", cards: [], tokens: 0}
       deck: _.shuffle(defaultDeck),
     };
     return message.channel.send("Game created.");
