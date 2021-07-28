@@ -4,7 +4,7 @@ module.exports.statusEmbed = (game) => {
   const description = `Countries in Play: ${game.players
     .map((p) => p.country)
     .join(", ")}\n\n${game.players
-    .map((p) => `<@${p.uid}>: ${p.cards.length()} Cards, ${p.tokens} Tokens`)
+    .map((p) => `<@${p.id}>: ${p.cards.length} Cards, ${p.tokens} Tokens`)
     .join("\n")}`;
 
   return new Discord.MessageEmbed()

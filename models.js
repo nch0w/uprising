@@ -41,7 +41,24 @@ const defaultDeck = [
   "Peacekeeper",
 ];
 
+const countryDeck = [
+  "USA",
+  "UK",
+  "Germany",
+  "France",
+  "Italy",
+  "Russia",
+  "China",
+  "Japan",
+  "ROK",
+  "India",
+  "DPRK",
+  "Switzerland",
+  "Israel",
+];
+
 module.exports = {
   games,
   defaultDeck,
+  countryDeck,
 };
