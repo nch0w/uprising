@@ -19,7 +19,10 @@ function execute(message, args, user) {
       if (args.length > 0 && player.cards.includes(card)) {
         idx = player.cards.indexOf(card);
         player.dropped.push(player.cards.splice(idx, 1));
-        return message.channel.send(`<@${person.id}> has dropped **${card}**.`);
+        person.send(`Your hand is now: ${player.cards.join(", ")}`);
+        return message.channel.send(
+          `<@${person.id}> has dropped a **${card}**.`
+        );
       } else {
         return message.channel.send("Incorrect parameters.");
       }
