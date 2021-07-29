@@ -2,18 +2,20 @@ const { games } = require("../models");
 
 function execute(message, args, user) {
   if (message.channel.id in games) {
-    let playerid = args[0];
-    if (isNaN(playerid) || isNaN(parseFloat(playerid))) {
-      // Assume it's a mention
-      playerid = playerid.substr(3, playerid.length - 4);
+    let person = message.author;
+    if (message.mentions.members.first()) {
+      person = message.mentions.members.first().user;
     }
     games[message.channel.id].players.push({
       country: "",
-      id: playerid,
-      user: message.mentions.members.first(),
+      revealed: "Unknown",
+      id: person.id,
+      user: person,
       cards: [],
+      dropped: [],
       tokens: 2,
     });
+    return message.channel.send(`<@${person.id}> added to game!`);
   } else {
     return message.channel.send("No game to add player to.");
   }

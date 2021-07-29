@@ -10,23 +10,26 @@ function execute(message, args, user) {
       (element) => element.user === person
     );
     if (player) {
-      for (let i = 0; i < 3; i++) {
-        player.cards.push(games[message.channel.id].deck.pop());
+      if (player.revealed === "Unknown") {
+        player.revealed = player.country;
+        return message.channel.send(
+          `<@${player.id}> has revealed themselves as **${player.country}**!`
+        );
+      } else {
+        return message.channel.send(
+          `<@${player.id}> has already revealed their country. ~~But if you forgot it, it was ${player.country}.~~`
+        );
       }
-      person.send(
-        `Your starting hand is:\n${player.cards[0]}, ${player.cards[1]}, ${player.cards[2]}`
-      );
-      return message.channel.send("Starting hand set!");
     } else {
       return message.channel.send("User not a player in game.");
     }
   } else {
-    return message.channel.send("No game to set hand for.");
+    return message.channel.send("No game to reveal a country in.");
   }
 }
 
 module.exports = {
-  name: "startinghand",
+  name: "revealcountry",
   aliases: [],
   execute,
 };

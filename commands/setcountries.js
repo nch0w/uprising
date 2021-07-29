@@ -14,8 +14,10 @@ function execute(message, args, user) {
           `Your country is ${shuffledCountries[i]}.`
         );
       }
+      return message.channel.send("Countries set!");
+    } else {
+      return message.channel.send("Invalid parameters.");
     }
-    return message.channel.send("Countries set!");
   } else {
     return message.channel.send("No game to set countries for.");
   }
