@@ -6,16 +6,23 @@ function execute(message, args, user) {
     if (message.mentions.members.first()) {
       person = message.mentions.members.first().user;
     }
-    games[message.channel.id].players.push({
-      country: "",
-      revealed: "Unknown",
-      id: person.id,
-      user: person,
-      cards: [],
-      dropped: [],
-      tokens: 2,
-    });
-    return message.channel.send(`<@${person.id}> added to game!`);
+    if (
+      games[message.channel.id].players.filter((p) => p.id === person.id)
+        .length === 0
+    ) {
+      games[message.channel.id].players.push({
+        country: "",
+        revealed: "Unknown",
+        id: person.id,
+        user: person,
+        cards: [],
+        dropped: [],
+        tokens: 2,
+      });
+      return message.channel.send(`<@${person.id}> added to game!`);
+    } else {
+      return message.channel.send(`<@${person.id}> is already in the game.`);
+    }
   } else {
     return message.channel.send("No game to add player to.");
   }
@@ -23,6 +30,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "setplayer",
-  aliases: [],
+  aliases: ["join"],
   execute,
 };
