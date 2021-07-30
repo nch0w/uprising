@@ -36,6 +36,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "addtokens",
-  aliases: [],
+  aliases: ["at"],
   execute,
 };

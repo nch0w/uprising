@@ -27,6 +27,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "startinghand",
-  aliases: [],
+  aliases: ["sh"],
   execute,
 };

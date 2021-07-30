@@ -14,6 +14,9 @@ function execute(message, args, user) {
           `Your country is ${shuffledCountries[i]}.`
         );
       }
+      games[message.channel.id].players = _.shuffle(
+        games[message.channel.id].players
+      );
       return message.channel.send("Countries set!");
     } else {
       return message.channel.send("Invalid parameters.");
@@ -25,6 +28,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "setcountries",
-  aliases: [],
+  aliases: ["sc"],
   execute,
 };

@@ -40,6 +40,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "uprising",
-  aliases: [],
+  aliases: ["u", "ur"],
   execute,
 };

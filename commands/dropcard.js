@@ -36,6 +36,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "dropcard",
-  aliases: [],
+  aliases: ["dc", "drop"],
   execute,
 };

@@ -37,6 +37,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "funding",
-  aliases: [],
+  aliases: ["f"],
   execute,
 };

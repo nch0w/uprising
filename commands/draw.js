@@ -26,6 +26,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "draw",
-  aliases: [],
+  aliases: ["d"],
   execute,
 };

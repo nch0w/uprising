@@ -43,6 +43,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "takeholding",
-  aliases: [],
+  aliases: ["th", "holding"],
   execute,
 };

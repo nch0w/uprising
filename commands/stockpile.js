@@ -26,6 +26,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "stockpile",
-  aliases: [],
+  aliases: ["sp"],
   execute,
 };

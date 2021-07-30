@@ -7,6 +7,7 @@ function execute(message, args, user) {
   } else {
     games[message.channel.id] = {
       players: [],
+      turn: 0,
       deck: _.shuffle(defaultDeck),
       holding: 0,
     };
@@ -16,6 +17,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "newgame",
-  aliases: [],
+  aliases: ["ng"],
   execute,
 };

@@ -12,6 +12,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "endgame",
-  aliases: [],
+  aliases: ["eg"],
   execute,
 };

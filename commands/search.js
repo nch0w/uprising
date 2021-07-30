@@ -52,6 +52,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "search",
-  aliases: [],
+  aliases: ["js"],
   execute,
 };

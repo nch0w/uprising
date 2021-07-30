@@ -51,6 +51,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "returncards",
-  aliases: [],
+  aliases: ["rc", "return"],
   execute,
 };

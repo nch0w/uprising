@@ -18,6 +18,7 @@ function execute(message, args, user) {
         cards: [],
         dropped: [],
         tokens: 2,
+        indicator: "",
       });
       return message.channel.send(`<@${person.id}> added to game!`);
     } else {

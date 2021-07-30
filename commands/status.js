@@ -11,6 +11,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "status",
-  aliases: ["statusreport"],
+  aliases: ["statusreport", "report"],
   execute,
 };
