@@ -10,6 +10,7 @@ function execute(message, args, user) {
       turn: 0,
       deck: _.shuffle(defaultDeck),
       holding: 0,
+      activist: 0,
     };
     return message.channel.send("Game created.");
   }

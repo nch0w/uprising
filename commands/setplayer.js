@@ -12,12 +12,14 @@ function execute(message, args, user) {
     ) {
       games[message.channel.id].players.push({
         country: "",
-        revealed: "Unknown",
+        revealed: "?",
         id: person.id,
         user: person,
         cards: [],
         dropped: [],
         tokens: 2,
+        countrytokens: 0,
+        entre: { status: "", count: 0 },
         indicator: "",
       });
       return message.channel.send(`<@${person.id}> added to game!`);

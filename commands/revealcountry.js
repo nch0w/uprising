@@ -10,11 +10,17 @@ function execute(message, args, user) {
       (element) => element.user === person
     );
     if (player) {
-      if (player.revealed === "Unknown") {
-        player.revealed = player.country;
-        return message.channel.send(
-          `<@${player.id}> has revealed themselves as **${player.country}**!`
-        );
+      if (player.revealed === "?") {
+        if (player.countrytokens === 0) {
+          player.revealed = player.country;
+          return message.channel.send(
+            `<@${player.id}> revealed themselves as **${player.country}**!`
+          );
+        } else {
+          return message.channel.send(
+            `<@${player.id}> is blocked from revealing their country.`
+          );
+        }
       } else {
         return message.channel.send(
           `<@${player.id}> has already revealed their country. ~~But if you forgot it, it was ${player.country}.~~`
