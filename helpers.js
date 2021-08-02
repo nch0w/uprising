@@ -11,7 +11,7 @@ module.exports.statusEmbed = (game) => {
       (p) =>
         `${p.indicator}<@${p.id}> (${p.revealed}): ${p.cards.length} Cards, ${
           p.tokens
-        } Tokens, ${p.countrytokens} Blockers ${
+        } Tokens, ${p.counters} Counters, ${p.countrytokens} Blockers ${
           p.entre.status
         }\nDropped: ${p.dropped.join(", ")}`
     )

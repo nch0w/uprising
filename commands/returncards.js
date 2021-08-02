@@ -37,7 +37,15 @@ function execute(message, args, user) {
             lastarg = args[i];
           }
         }
-        return person.send(`Your hand is now: ${player.cards.join(", ")}`);
+        if (player.specialcards.length > 0) {
+          return person.send(
+            `Your hand is now: ${player.cards.join(
+              ", "
+            )}\nThe card on your Country Card is ${player.specialcards}`
+          );
+        } else {
+          return person.send(`Your hand is now: ${player.cards.join(", ")}`);
+        }
       } else {
         return message.channel.send("Incorrect parameters.");
       }

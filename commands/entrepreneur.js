@@ -10,11 +10,11 @@ function execute(message, args, user) {
       (element) => element.user === person
     );
     if (player) {
-      player.tokens = player.tokens + 4;
+      player.tokens = player.tokens + 5;
       games[message.channel.id].holding = games[message.channel.id].holding + 1;
       player.entre = { status: "(Entrepreneured)", count: 1 };
       return message.channel.send(
-        `<@${player.id}> claimed Entrepreneur and recieved **4 tokens**, placing **1 token** into the Holding Area at the same time!\nThey now have **${player.tokens}**.`
+        `<@${player.id}> claimed Entrepreneur and recieved **5 tokens**, placing **1 token** into the Holding Area at the same time!\nThey now have **${player.tokens}**.`
       );
     } else {
       return message.channel.send("User not a player in game.");

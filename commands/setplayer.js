@@ -16,9 +16,11 @@ function execute(message, args, user) {
         id: person.id,
         user: person,
         cards: [],
+        specialcards: [],
         dropped: [],
         tokens: 2,
         countrytokens: 0,
+        counters: 0,
         entre: { status: "", count: 0 },
         indicator: "",
       });

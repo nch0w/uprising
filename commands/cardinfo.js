@@ -8,9 +8,9 @@ function execute(message, args, user) {
     card = "Sentry Guard";
   }
   if (args.length > 0 && cardInfo[card]) {
-    message.author.send(cardInfo[card]);
+    return message.channel.send(cardInfo[card]);
   } else {
-    message.author.send("Invalid parameters.");
+    return message.channel.send("Invalid parameters.");
   }
 }
 

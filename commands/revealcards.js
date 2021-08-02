@@ -1,7 +1,6 @@
 const { games } = require("../models");
 
 function execute(message, args, user) {
-  if (!user.isOwner) return;
   if (message.channel.id in games) {
     return message.channel.send(
       `**Remaining Cards in Deck:**\n${games[message.channel.id].deck.join(

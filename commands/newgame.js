@@ -9,6 +9,7 @@ function execute(message, args, user) {
       players: [],
       turn: 0,
       deck: _.shuffle(defaultDeck),
+      trade: { trader: [], card: [], source: "" },
       holding: 0,
       activist: 0,
     };

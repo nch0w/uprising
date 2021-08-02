@@ -19,7 +19,15 @@ function execute(message, args, user) {
       if (args.length > 0 && player.cards.includes(card)) {
         idx = player.cards.indexOf(card);
         player.dropped.push(player.cards.splice(idx, 1));
-        person.send(`Your hand is now: ${player.cards.join(", ")}`);
+        if (player.specialcards.length > 0) {
+          person.send(
+            `Your hand is now: ${player.cards.join(
+              ", "
+            )}\nThe card on your Country Card is ${player.specialcards}`
+          );
+        } else {
+          person.send(`Your hand is now: ${player.cards.join(", ")}`);
+        }
         return message.channel.send(
           `<@${person.id}> has dropped a **${card}**.`
         );
