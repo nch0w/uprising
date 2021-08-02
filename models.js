@@ -73,7 +73,7 @@ const cardInfo = {
   China:
     "**China** (United Security Confederation - Utility):\nYou can reveal your country before or after any turn. You may declare your country to immediately perform 1 free action. Place 2 counters on your country card. You may use counters between turns to immediately perform one free action. (1 counter for 1 action). You may spend an action to receive a counter.\nYour counter cap is 4.",
   Japan:
-    "**Japan** (United Security Confederation - Support):\nYou may declare a card to exchange it with a card from your hand by searching the deck, then shuffling it. Increase your token cap to 27 and draw 4 tokens.\nYou also gain the ability to perform this action when you reveal your country:\nACTION: Place two counters on your country card.\nYou may spend one counter to help block 1 Assassination or Uprising targeted at other players. You have to claim the relevant card/cost to do so however. Your counter cap is 4. Your Politician claims may not be challenged.",
+    "**Japan** (United Security Confederation - Support):\nYou may declare a card to exchange it with a card from your hand by searching the deck, then shuffling it. Increase your token cap to 27 and draw 4 tokens.\nYou also gain the ability to perform this action when you reveal your country:\nACTION: Place two counters on your country card.\nYou may spend one counter to help block 1 Assassination or Uprising targeted at other players. You have to claim the relevant card/cost to do so however. Your counter cap is 4. Your Politician claims may not be challenged.\nUse !search to search for a card.",
   ROK:
     "**South Korea** (United Security Confederation - Support):\nYou may reveal your country to give a counter to any revealed player and activate this passive:\nWhen you are alive, once per turn (increase to twice per turn if SK has more than 2 alive allies), any 2 revealed Asians may swap one card among themselves . The cards are swapped facedown. The two Asians who swapped cards both gain a token.\nYou may place a card from the deck onto your country card, it does not count towards your lives or hand, but it interacts with your passive. Only South Korea may look at the card on his country card.",
   India:
@@ -89,7 +89,7 @@ const cardInfo = {
   President:
     "**President** (Blue Strip, 2 in a deck):\nAbility #1: You may draw up to X+2 tokens from the Reserve. X is defined as the amount of alive players other than yourself divided by 2 rounded up. Starting from the player on your left (going clockwise), take tokens from the Reserve and give [X+1] players 1 token each.",
   Entrepreneur:
-    "**Entrepreneur** (Blue Strip, 3 in a deck):\nAbility #1: Draw 5 tokens from the Reserve. Place 1 token from the Reserve into the Holding Area. You may not claim Blue Strip, Sentry Guard, General or Income until after your next turn action.\nAbility #2: Block Scout targeted at you (Passive)",
+    "**Entrepreneur** (Blue Strip, 3 in a deck):\nAbility #1: Draw 5 tokens from the Reserve. Place 1 token from the Reserve into the Holding Area. You may not claim Blue Strip, Sentry Guard, General or Income until after your next turn action.(Use !entrepreneur)\nAbility #2: Block Scout targeted at you (Passive)",
   Politician:
     "**Politician** (Red Strip, 2 in a deck):\nAbility #1 (Passive): Pay 6 tokens to the Reserve to block Bounty Hunter targeted at you.\nAbility #2 (Passive): Pay 9 tokens to the Reserve to block Uprising targeted at you.",
   Medic:
@@ -99,15 +99,15 @@ const cardInfo = {
   "Sentry Guard":
     "**Sentry Guard** (Yellow Strip, 4 in a deck): \nAbility #1: (Passive): Block Bounty Hunter.\nAbility #2: Draw 2 tokens from the Reserve.",
   General:
-    "**General** (Yellow Strip, 4 in a deck):\nAbility #1: Steal two tokens from the target player. (Blocked by Peacekeeper)\nAbility #2 (Passive): When targeted by a General, draw 2 tokens from the Reserve.",
+    "**General** (Yellow Strip, 4 in a deck):\nAbility #1: Steal two tokens from the target player. (Blocked by Peacekeeper) (Use !steal)\nAbility #2 (Passive): When targeted by a General, draw 2 tokens from the Reserve.",
   Peacekeeper:
-    "**Peacekeeper** (Yellow Strip, 4 in a deck):\nAbility #1: Draw 2 cards from the deck into your hand. Then, put any 2 cards from your hand back into the deck.\nAbility #2 (Passive): Block General.",
+    "**Peacekeeper** (Yellow Strip, 4 in a deck):\nAbility #1: Draw 2 cards from the deck into your hand. Then, put any 2 cards from your hand back into the deck. (Use !peace)\nAbility #2 (Passive): Block General.",
   Scout:
     "**Scout** (Green Strip, 2 in a deck):\nAbility #1: Pay X tokens to look at X of target player’s cards [target player chooses which to reveal to you] (Blocked by Entrepreneur)\nAbility #2: Pay X +1 amount of tokens to the bank. You may draw X amount of cards from the deck, then put X cards from your hand back into the deck. ",
   Diplomat:
-    "**Diplomat** (Green Strip, 2 in a deck):\nAbility #1: Pay 1 token to the Reserve, 1 token to the Holding Area to grant the target player an immediate free action.\nAbility #2: Place X amount of tokens on the target player’s unrevealed country card. Until his country card has no tokens, he may not reveal it. He may pay 1 token to the Reserve to remove 1 token from his country card (does not take an action).\nYou may not Diplomat off a free action.",
+    "**Diplomat** (Green Strip, 2 in a deck):\nAbility #1: Pay 1 token to the Reserve, 1 token to the Holding Area to grant the target player an immediate free action.\nAbility #2: Place X amount of tokens on the target player’s unrevealed country card. Until his country card has no tokens, he may not reveal it. He may pay 1 token to the Reserve to remove 1 token from his country card (does not take an action).\nYou may not Diplomat off a free action.(Use !diplomat and !unblock respectively)",
   Activist:
-    "**Activist** (Green Strip, 2 in a deck):\nAbility #1 (Passive): Take a free action if someone else lost a life and you did not just take an action.\nAbility #2: (Passive) Block Bounty Hunter.\nYou may not Activist off a loss of life resulting directly from a free action. (Challenges are fine) The table may only claim Ability #1 4 times in a round.",
+    "**Activist** (Green Strip, 2 in a deck):\nAbility #1 (Passive): Take a free action if someone else lost a life and you did not just take an action.(Use !activist)\nAbility #2: (Passive) Block Bounty Hunter.\nYou may not Activist off a loss of life resulting directly from a free action. (Challenges are fine) The table may only claim Ability #1 4 times in a round.",
   Commissar:
     "**Commissar** (Green Strip, 2 in a deck):\nAbility #1: Target player shows you a card from his hand at random. You may choose to discard it, if you do, he draws however many cards you discarded. If you and the target player are revealed allies, take 2 cards instead. (Blocked by Bounty Hunter)\nAbility #2: Pay 2 tokens to the Reserve to target two players + yourself. Target players (including yourself) may not draw tokens from the Reserve during their next action. (Blocked by Bounty Hunter)",
 };
