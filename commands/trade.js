@@ -10,8 +10,13 @@ function execute(message, args, user) {
       (element) => element.user === person
     );
     if (player) {
+      let skSlots = 1;
+      if (games[message.channel.id].revealed.asians > 3) {
+        skSlots = 2;
+      }
       if (
         args.length > 0 &&
+        games[message.channel.id].trade.counter < skSlots &&
         ["Russia", "China", "ROK", "Japan", "India"].includes(
           player.revealed
         ) &&
@@ -33,6 +38,11 @@ function execute(message, args, user) {
           } else {
             games[message.channel.id].trade.trader.specialcards.push(cardtwo);
           }
+          player.tokens = player.tokens + 1;
+          games[message.channel.id].trade.trader.tokens =
+            games[message.channel.id].trade.trader.tokens + 1;
+          games[message.channel.id].trade.counter =
+            games[message.channel.id].trade.counter + 1;
           person.send(`You have traded a ${cardtwo} for a ${cardone}.`);
           if (player.specialcards.length > 0) {
             person.send(
@@ -60,7 +70,11 @@ function execute(message, args, user) {
           return message.channel.send(
             `The card trade between <@${
               games[message.channel.id].trade.trader.id
-            }> and <@${player.id}> is complete!`
+            }> and <@${
+              player.id
+            }> is complete!\nThey each gained **1 token** and now have ${
+              games[message.channel.id].trade.trader.tokens
+            } and ${player.tokens}.`
           );
         } else {
           let card;

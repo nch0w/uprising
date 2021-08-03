@@ -12,6 +12,22 @@ function execute(message, args, user) {
     if (player) {
       if (player.revealed === "?") {
         if (player.countrytokens === 0) {
+          if (
+            ["USA", "UK", "Germany", "France", "Italy"].includes(player.country)
+          ) {
+            games[message.channel.id].revealed.europeans =
+              games[message.channel.id].revealed.europeans + 1;
+          } else if (
+            ["China", "Russia", "ROK", "Japan", "India"].includes(
+              player.country
+            )
+          ) {
+            games[message.channel.id].revealed.asians =
+              games[message.channel.id].revealed.asians + 1;
+          } else {
+            games[message.channel.id].revealed.neutrals =
+              games[message.channel.id].revealed.neutrals + 1;
+          }
           player.revealed = player.country;
           return message.channel.send(
             `<@${player.id}> revealed themselves as **${player.country}**!`

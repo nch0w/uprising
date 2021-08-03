@@ -7,9 +7,10 @@ function execute(message, args, user) {
   } else {
     games[message.channel.id] = {
       players: [],
+      revealed: { asians: 0, europeans: 0, neutrals: 0 },
       turn: 0,
       deck: _.shuffle(defaultDeck),
-      trade: { trader: [], card: [], source: "" },
+      trade: { trader: [], card: [], source: "", counter: 0 },
       holding: 0,
       activist: 0,
     };

@@ -13,6 +13,12 @@ function execute(message, args, user) {
         }>'s turn!`
       );
     }
+    if (
+      games[message.channel.id].players.filter((p) => p.cards.length !== 0)
+        .length === 0
+    ) {
+      return message.channel.send("All players appear to be dead.");
+    }
     games[message.channel.id].players[
       games[message.channel.id].turn
     ].indicator = "";
@@ -28,7 +34,6 @@ function execute(message, args, user) {
         games[message.channel.id].turn
       ].entre.status = "";
     }
-
     games[message.channel.id].turn = games[message.channel.id].turn + 1;
     if (
       games[message.channel.id].turn ===
@@ -36,6 +41,21 @@ function execute(message, args, user) {
     ) {
       games[message.channel.id].turn = 0;
       games[message.channel.id].activist = 0;
+      games[message.channel.id].trade.counter = 0;
+    }
+    while (
+      games[message.channel.id].players[games[message.channel.id].turn].cards
+        .length === 0
+    ) {
+      games[message.channel.id].turn = games[message.channel.id].turn + 1;
+      if (
+        games[message.channel.id].turn ===
+        games[message.channel.id].players.length
+      ) {
+        games[message.channel.id].turn = 0;
+        games[message.channel.id].activist = 0;
+        games[message.channel.id].trade.counter = 0;
+      }
     }
     games[message.channel.id].players[
       games[message.channel.id].turn
