@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const { PREFIX } = require("../env");
 
 function execute(message, args, user) {
-  const embed = new Discord.MessageEmbed().setTitle("Commands").addFields(
+  const setup = new Discord.MessageEmbed().setTitle("Setup Commands").addFields(
     {
       name: `${PREFIX}newgame|ng`,
       value: "Start a new game",
@@ -30,66 +30,120 @@ function execute(message, args, user) {
     {
       name: `${PREFIX}endgame|eg`,
       value: "End the game",
+    }
+  );
+  const general = new Discord.MessageEmbed()
+    .setTitle("General/Universal Commands")
+    .addFields(
+      {
+        name: `${PREFIX}addcounters|ac {number}`,
+        value: "Add (or remove) counters from player",
+      },
+      {
+        name: `${PREFIX}addtokens|at {number}`,
+        value: "Add (or remove) tokens from player",
+      },
+      {
+        name: `${PREFIX}draw|d`,
+        value: "Draw a card from the deck",
+      },
+      {
+        name: `${PREFIX}dropcard|dc`,
+        value: "Drop a killed card",
+      },
+      {
+        name: `${PREFIX}returncards|rc {cards}`,
+        value: "Return cards to the bottom of the deck",
+      },
+      {
+        name: `${PREFIX}revealcards`,
+        value: "Reveal the rest of the cards in the deck",
+      },
+      {
+        name: `${PREFIX}revealcountry`,
+        value: "Reveal the player's country",
+      },
+      {
+        name: `${PREFIX}shuffle`,
+        value: "Shuffle the deck",
+      },
+      {
+        name: `${PREFIX}steal {number} {@target}`,
+        value: "Steal a number of tokens from an opponent",
+      },
+      {
+        name: `${PREFIX}takeholding|th {number}`,
+        value: "Take (or give) tokens from the Holding Area",
+      },
+      {
+        name: `${PREFIX}income|i`,
+        value: "Use Income action",
+      },
+      {
+        name: `${PREFIX}funding|f`,
+        value: "Use Funding action",
+      },
+      {
+        name: `${PREFIX}stockpile|sp`,
+        value: "Use Stockpile action",
+      },
+      {
+        name: `${PREFIX}uprising|u {@target}`,
+        value: "Start an Uprising against an opponent",
+      }
+    );
+  const specific = new Discord.MessageEmbed()
+    .setTitle("Card/Country Commands")
+    .addFields(
+      {
+        name: `${PREFIX}activist|a`,
+        value: "Use Activist's Ability #1",
+      },
+      {
+        name: `${PREFIX}diplomat|dm {number} {@target}`,
+        value: "Use Diplomat's Ability #2",
+      },
+      {
+        name: `${PREFIX}entrepreneur|e`,
+        value: "Use Entrepreneur's Ability #1",
+      },
+      {
+        name: `${PREFIX}france|fr {number} {@target}`,
+        value: "Use France's token transfer (Europe only)",
+      },
+      {
+        name: `${PREFIX}peace|p`,
+        value: "Use Peacekeeper's Ability #1",
+      },
+      {
+        name: `${PREFIX}search|js {card}`,
+        value: "Search the deck for a card (Japan only)",
+      },
+      {
+        name: `${PREFIX}trade|t {card number|cc}`,
+        value: "Offer an ROK trade or complete an ROK trade (Asia only)",
+      },
+      {
+        name: `${PREFIX}unblock|ub {number}`,
+        value: "Unblock the player's country card",
+      },
+      {
+        name: `${PREFIX}usa|us {target}`,
+        value: "Peek at another player's country (USA only)",
+      }
+    );
+  const embed = new Discord.MessageEmbed().setTitle("Commands").addFields(
+    {
+      name: `${PREFIX}info setup`,
+      value: "Get commands for game setup and progression",
     },
     {
-      name: `${PREFIX}addtokens|at {number}`,
-      value: "Add (or remove) tokens from player",
+      name: `${PREFIX}info general`,
+      value: "Get commands for general game mechanics and Universal Actions",
     },
     {
-      name: `${PREFIX}draw|d`,
-      value: "Draw a card from the deck",
-    },
-    {
-      name: `${PREFIX}dropcard|dc`,
-      value: "Drop a killed card",
-    },
-    {
-      name: `${PREFIX}returncards|rc {cards}`,
-      value: "Return cards to the bottom of the deck",
-    },
-    {
-      name: `${PREFIX}revealcards`,
-      value: "Reveal the rest of the cards in the deck",
-    },
-    {
-      name: `${PREFIX}revealcountry`,
-      value: "Reveal the player's country",
-    },
-    {
-      name: `${PREFIX}shuffle`,
-      value: "Shuffle the deck",
-    },
-    {
-      name: `${PREFIX}steal {number} {@target}`,
-      value: "Steal a number of tokens from an opponent",
-    },
-    {
-      name: `${PREFIX}takeholding|th {number}`,
-      value: "Take (or give) tokens from the Holding Area",
-    },
-    {
-      name: `${PREFIX}income|i`,
-      value: "Use Income action",
-    },
-    {
-      name: `${PREFIX}funding|f`,
-      value: "Use Funding action",
-    },
-    {
-      name: `${PREFIX}stockpile|sp`,
-      value: "Use Stockpile action",
-    },
-    {
-      name: `${PREFIX}uprising|u {@target}`,
-      value: "Start an Uprising against an opponent",
-    },
-    {
-      name: `${PREFIX}peace|p`,
-      value: "Use Peacekeeper's Ability #1",
-    },
-    {
-      name: `${PREFIX}search|js {card}`,
-      value: "Search the deck for a card (Japan only)",
+      name: `${PREFIX}info specific`,
+      value: "Get commands for card-specific and country-specific actions",
     },
     {
       name: `${PREFIX}cardinfo|ci {card|country}`,
@@ -108,7 +162,15 @@ function execute(message, args, user) {
       value: "Show this help message",
     }
   );
-  message.channel.send(embed);
+  if (args.length > 0 && args[0] === "setup") {
+    message.channel.send(setup);
+  } else if (args.length > 0 && args[0] === "general") {
+    message.channel.send(general);
+  } else if (args.length > 0 && args[0] === "specific") {
+    message.channel.send(specific);
+  } else {
+    message.channel.send(embed);
+  }
 }
 
 module.exports = {

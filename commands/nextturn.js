@@ -41,6 +41,7 @@ function execute(message, args, user) {
     ) {
       games[message.channel.id].turn = 0;
       games[message.channel.id].activist = 0;
+      games[message.channel.id].france = 0;
       games[message.channel.id].trade.counter = 0;
     }
     while (
@@ -54,6 +55,7 @@ function execute(message, args, user) {
       ) {
         games[message.channel.id].turn = 0;
         games[message.channel.id].activist = 0;
+        games[message.channel.id].france = 0;
         games[message.channel.id].trade.counter = 0;
       }
     }

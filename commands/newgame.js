@@ -13,6 +13,8 @@ function execute(message, args, user) {
       trade: { trader: [], card: [], source: "", counter: 0 },
       holding: 0,
       activist: 0,
+      france: 0,
+      usa: 0,
     };
     return message.channel.send("Game created.");
   }

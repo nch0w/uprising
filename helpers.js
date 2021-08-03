@@ -9,7 +9,13 @@ module.exports.statusEmbed = (game) => {
   }/4\nROK Trades: ${game.trade.counter}/${Math.min(
     Math.max(game.revealed.asians - 2, 1),
     2
-  )}\n\n${game.players
+  )}\nFrance Transfers: ${game.france}/${
+    game.players.filter(
+      (p) =>
+        ["USA", "UK", "Germany", "Italy"].includes(p.revealed) &&
+        p.cards.length > 0
+    ).length * 2
+  }\n\n${game.players
     .map(
       (p) =>
         `${p.indicator}<@${p.id}> (${p.revealed}): ${p.cards.length} Cards, ${

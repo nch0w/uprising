@@ -106,6 +106,6 @@ function execute(message, args, user) {
 
 module.exports = {
   name: "trade",
-  aliases: ["t"],
+  aliases: ["t", "rok", "southkorea"],
   execute,
 };
