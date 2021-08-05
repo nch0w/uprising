@@ -44,6 +44,10 @@ function execute(message, args, user) {
         value: "Add (or remove) tokens from player",
       },
       {
+        name: `${PREFIX}challenged|ch {card}`,
+        value: "Reveal a card to win a challenge",
+      },
+      {
         name: `${PREFIX}draw|d`,
         value: "Draw a card from the deck",
       },
@@ -124,7 +128,7 @@ function execute(message, args, user) {
         value: "Offer an ROK trade or complete an ROK trade (Asia only)",
       },
       {
-        name: `${PREFIX}unblock|ub {number}`,
+        name: `${PREFIX}unblock|ub`,
         value: "Unblock the player's country card",
       },
       {

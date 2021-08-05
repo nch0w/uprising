@@ -1,5 +1,9 @@
 const { games } = require("../models");
 
+function capFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function execute(message, args, user) {
   if (message.channel.id in games) {
     let person = message.author;
@@ -9,10 +13,10 @@ function execute(message, args, user) {
     const player = games[message.channel.id].players.find(
       (element) => element.user === person
     );
-    let card = args[0];
-    if (["Bounty", "Hunter"].includes(args[0])) {
+    let card = capFirstLetter(args[0]);
+    if (["bounty", "hunter"].includes(args[0].toLowerCase())) {
       card = "Bounty Hunter";
-    } else if (["Sentry", "Guard"].includes(args[0])) {
+    } else if (["sentry", "guard"].includes(args[0].toLowerCase())) {
       card = "Sentry Guard";
     }
     if (player) {

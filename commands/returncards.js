@@ -1,5 +1,9 @@
 const { games } = require("../models");
 
+function capFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function execute(message, args, user) {
   message.delete();
   if (message.channel.id in games) {
@@ -15,15 +19,15 @@ function execute(message, args, user) {
         let lastarg = "none";
         for (i = 0; i < args.length; i++) {
           if (
-            (lastarg === "Bounty" && args[i] === "Hunter") ||
-            (lastarg === "Sentry" && args[i] === "Guard")
+            (lastarg === "Bounty" && capFirstLetter(args[i]) === "Hunter") ||
+            (lastarg === "Sentry" && capFirstLetter(args[i]) === "Guard")
           ) {
             lastarg = "none";
           } else {
-            let card = args[i];
-            if (["Bounty", "Hunter"].includes(args[i])) {
+            let card = capFirstLetter(args[i]);
+            if (["Bounty", "Hunter"].includes(capFirstLetter(args[i]))) {
               card = "Bounty Hunter";
-            } else if (["Sentry", "Guard"].includes(args[i])) {
+            } else if (["Sentry", "Guard"].includes(capFirstLetter(args[i]))) {
               card = "Sentry Guard";
             }
             let idx = player.cards.indexOf(card);

@@ -1,6 +1,10 @@
 const { games, defaultDeck } = require("../models");
 const _ = require("underscore");
 
+function capFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function execute(message, args, user) {
   if (message.channel.id in games) {
     let person = message.author;
@@ -11,10 +15,10 @@ function execute(message, args, user) {
       (element) => element.user === person
     );
     if (player) {
-      let card = args[0];
-      if (["Bounty", "Hunter"].includes(args[0])) {
+      let card = capFirstLetter(args([0]));
+      if (["Bounty", "Hunter"].includes(capFirstLetter(args[0]))) {
         card = "Bounty Hunter";
-      } else if (["Sentry", "Guard"].includes(args[0])) {
+      } else if (["Sentry", "Guard"].includes(capFirstLetter(args[0]))) {
         card = "Sentry Guard";
       }
       if (
