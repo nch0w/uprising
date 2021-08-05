@@ -64,7 +64,7 @@ const cardInfo = {
   Germany:
     "**Germany** (Trans-Continental Security Alliance - Offense):\nYou may reveal your country to gain 2 counters. When performing an Uprising, if successful, you may spend one counter and 2 tokens to force the opponent to lose one more life. Whenever you kill someone without the use of counters, gain a counter.",
   France:
-    "**France** (Trans-Continental Security Alliance - Support):\nYou may reveal your county card to activate this passive:\nWhen you are alive, revealed Europeans may transfer X amount of tokens amongst themselves per round. X is defined as the amount of alive Europeans allies France has in the game x2. You may only swap before and after people’s turns.",
+    "**France** (Trans-Continental Security Alliance - Support):\nYou may reveal your county card to activate this passive:\nWhen you are alive, revealed Europeans may transfer X amount of tokens amongst themselves per round. X is defined as the amount of alive Europeans allies France has in the game x2. You may only swap before and after people’s turns.(Use !france for this)",
   Italy:
     "**Italy** (Trans-Continental Security Alliance - Utility):\nYou can reveal your country before or after any turn. Revealing your country gives the ability to perform this action:\nACTION: Pay 2 tokens to the Reserve to remove a counter of your choice from a country.\nIn addition, whenever someone other than revealed Europeans claims the Minister, Peacekeeper, or Sentry Guard, you may perform a free action. You may not claim Blue Strip cards or the General. Your hand size is reduced to two.",
   Russia:
