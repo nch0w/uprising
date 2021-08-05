@@ -1,4 +1,5 @@
 const games = {};
+const backup = {};
 
 const defaultDeck = [
   "Activist",
@@ -110,6 +111,7 @@ const cardInfo = {
 
 module.exports = {
   games,
+  backup,
   defaultDeck,
   countryDeck,
   cardInfo,

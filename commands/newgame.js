@@ -1,4 +1,4 @@
-const { games, defaultDeck } = require("../models");
+const { games, backup, defaultDeck } = require("../models");
 const _ = require("underscore");
 
 function execute(message, args, user) {
@@ -16,6 +16,9 @@ function execute(message, args, user) {
       france: 0,
       usa: 0,
     };
+    backup[message.channel.id] = JSON.parse(
+      JSON.stringify(games[message.channel.id])
+    );
     return message.channel.send("Game created.");
   }
 }

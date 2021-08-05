@@ -1,4 +1,4 @@
-const { games, countryDeck } = require("../models");
+const { games, backup, countryDeck } = require("../models");
 const _ = require("underscore");
 
 function capFirstLetterCountries(string) {
@@ -10,6 +10,9 @@ function capFirstLetterCountries(string) {
 }
 
 function execute(message, args, user) {
+  backup[message.channel.id] = JSON.parse(
+    JSON.stringify(games[message.channel.id])
+  );
   if (message.channel.id in games) {
     if (
       args.length === games[message.channel.id].players.length &&

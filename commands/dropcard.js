@@ -1,10 +1,13 @@
-const { games } = require("../models");
+const { games, backup } = require("../models");
 
 function capFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function execute(message, args, user) {
+  backup[message.channel.id] = JSON.parse(
+    JSON.stringify(games[message.channel.id])
+  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {

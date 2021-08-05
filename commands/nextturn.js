@@ -1,6 +1,9 @@
-const { games } = require("../models");
+const { games, backup } = require("../models");
 
 function execute(message, args, user) {
+  backup[message.channel.id] = JSON.parse(
+    JSON.stringify(games[message.channel.id])
+  );
   if (message.channel.id in games) {
     if (
       games[message.channel.id].turn === 0 &&

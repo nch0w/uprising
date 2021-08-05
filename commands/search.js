@@ -1,4 +1,4 @@
-const { games, defaultDeck } = require("../models");
+const { games, backup, defaultDeck } = require("../models");
 const _ = require("underscore");
 
 function capFirstLetter(string) {
@@ -6,6 +6,9 @@ function capFirstLetter(string) {
 }
 
 function execute(message, args, user) {
+  backup[message.channel.id] = JSON.parse(
+    JSON.stringify(games[message.channel.id])
+  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {

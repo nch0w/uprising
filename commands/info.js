@@ -80,6 +80,10 @@ function execute(message, args, user) {
         value: "Take (or give) tokens from the Holding Area",
       },
       {
+        name: `${PREFIX}undo`,
+        value: "Undo the effects of the last command made",
+      },
+      {
         name: `${PREFIX}income|i`,
         value: "Use Income action",
       },
@@ -102,6 +106,10 @@ function execute(message, args, user) {
       {
         name: `${PREFIX}activist|a`,
         value: "Use Activist's Ability #1",
+      },
+      {
+        name: `${PREFIX}commissar|cm`,
+        value: "Use Commissar's Ability #1",
       },
       {
         name: `${PREFIX}diplomat|dm {number} {@target}`,
