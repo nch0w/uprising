@@ -1,4 +1,5 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function capFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
@@ -6,9 +7,6 @@ function capFirstLetter(string) {
 
 function execute(message, args, user) {
   message.delete();
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -45,14 +43,19 @@ function execute(message, args, user) {
           }
         }
         if (player.specialcards.length > 0) {
-          return person.send(
+          person.send(
             `Your hand is now: ${player.cards.join(
               ", "
             )}\nThe card on your Country Card is ${player.specialcards}`
           );
         } else {
-          return person.send(`Your hand is now: ${player.cards.join(", ")}`);
+          person.send(`Your hand is now: ${player.cards.join(", ")}`);
         }
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "returncards",
+          user: person,
+        });
       } else {
         return message.channel.send("Incorrect parameters.");
       }

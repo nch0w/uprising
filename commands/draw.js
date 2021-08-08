@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -22,9 +20,14 @@ function execute(message, args, user) {
               ", "
             )}`
           );
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> drew a card and placed it on their Country Card!`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "draw",
+            user: person,
+          });
         } else {
           return message.channel.send(
             `<@${player.id} not allowed to draw to Country Card.`
@@ -33,6 +36,9 @@ function execute(message, args, user) {
       } else {
         const newcard = games[message.channel.id].deck.shift();
         player.cards.push(newcard);
+        if (player.death === "~~") {
+          player.death = "";
+        }
         if (player.specialcards.length > 0) {
           person.send(
             `You drew a ${newcard}.\nYour hand is now: ${player.cards.join(
@@ -46,7 +52,12 @@ function execute(message, args, user) {
             )}`
           );
         }
-        return message.channel.send(`<@${player.id}> drew a card!`);
+        message.channel.send(`<@${player.id}> drew a card!`);
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "draw",
+          user: person,
+        });
       }
     } else {
       return message.channel.send("User not a player in game.");

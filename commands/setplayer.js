@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -26,8 +24,14 @@ function execute(message, args, user) {
         counters: 0,
         entre: { status: "", count: 0 },
         indicator: "",
+        death: "",
       });
-      return message.channel.send(`<@${person.id}> added to game!`);
+      message.channel.send(`<@${person.id}> added to game!`);
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "setplayer",
+        user: person,
+      });
     } else {
       return message.channel.send(`<@${person.id}> is already in the game.`);
     }

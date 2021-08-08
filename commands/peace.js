@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -25,9 +23,14 @@ function execute(message, args, user) {
       } else {
         person.send(`Your hand is now: ${player.cards.join(", ")}`);
       }
-      return message.channel.send(
+      message.channel.send(
         `<@${player.id}> claimed Peacekeeper to draw two cards! (They must return two cards now.)`
       );
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "peace",
+        user: person,
+      });
     } else {
       return message.channel.send("User not a player in game.");
     }

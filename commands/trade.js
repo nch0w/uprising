@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -19,6 +17,9 @@ function execute(message, args, user) {
       }
       if (
         args.length > 0 &&
+        games[message.channel.id].players.find(
+          (p) => p.cards.length > 0 && p.revealed === "ROK"
+        ) &&
         games[message.channel.id].trade.counter < skSlots &&
         ["Russia", "China", "ROK", "Japan", "India"].includes(
           player.revealed
@@ -29,6 +30,9 @@ function execute(message, args, user) {
         if (games[message.channel.id].trade.card.length > 0) {
           let cardone = games[message.channel.id].trade.card.pop();
           let cardtwo;
+          let trader = games[message.channel.id].players.find(
+            (element) => element.user === games[message.channel.id].trade.trader
+          );
           if (parseInt(args[0])) {
             cardtwo = player.cards.splice(parseInt(args[0]) - 1, 1);
             player.cards.push(cardone);
@@ -37,13 +41,12 @@ function execute(message, args, user) {
             player.specialcards.push(cardone);
           }
           if (games[message.channel.id].trade.source === "hand") {
-            games[message.channel.id].trade.trader.cards.push(cardtwo);
+            trader.cards.push(cardtwo);
           } else {
-            games[message.channel.id].trade.trader.specialcards.push(cardtwo);
+            trader.specialcards.push(cardtwo);
           }
           player.tokens = player.tokens + 1;
-          games[message.channel.id].trade.trader.tokens =
-            games[message.channel.id].trade.trader.tokens + 1;
+          trader.tokens = trader.tokens + 1;
           games[message.channel.id].trade.counter =
             games[message.channel.id].trade.counter + 1;
           person.send(`You have traded a ${cardtwo} for a ${cardone}.`);
@@ -56,28 +59,18 @@ function execute(message, args, user) {
           } else {
             person.send(`Your hand is now: ${player.cards.join(", ")}`);
           }
-          games[message.channel.id].trade.trader.user.send(
-            `You have traded a ${cardone} for a ${cardtwo}.`
-          );
-          if (games[message.channel.id].trade.trader.specialcards.length > 0) {
-            games[message.channel.id].trade.trader.user.send(
+          trader.user.send(`You have traded a ${cardone} for a ${cardtwo}.`);
+          if (trader.specialcards.length > 0) {
+            trader.user.send(
               `Your hand is now: ${player.cards.join(
                 ", "
               )}\nThe card on your Country Card is ${player.specialcards}`
             );
           } else {
-            games[message.channel.id].trade.trader.user.send(
-              `Your hand is now: ${player.cards.join(", ")}`
-            );
+            trader.user.send(`Your hand is now: ${player.cards.join(", ")}`);
           }
-          return message.channel.send(
-            `The card trade between <@${
-              games[message.channel.id].trade.trader.id
-            }> and <@${
-              player.id
-            }> is complete!\nThey each gained **1 token** and now have ${
-              games[message.channel.id].trade.trader.tokens
-            } and ${player.tokens}.`
+          message.channel.send(
+            `The card trade between <@${trader.id}> and <@${player.id}> is complete!\nThey each gained **1 token** and now have ${trader.tokens} and ${player.tokens}.`
           );
         } else {
           let card;
@@ -89,13 +82,18 @@ function execute(message, args, user) {
             games[message.channel.id].trade.source = "Country Card";
           }
           games[message.channel.id].trade.card.push(card);
-          games[message.channel.id].trade.trader = player;
-          return message.channel.send(
+          games[message.channel.id].trade.trader = person;
+          message.channel.send(
             `<@${player.id}> offered a card from their ${
               games[message.channel.id].trade.source
             } for trade with another revealed Asian country.`
           );
         }
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "trade",
+          user: person,
+        });
       } else {
         return message.channel.send("Invalid parameters.");
       }

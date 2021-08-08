@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -14,9 +12,14 @@ function execute(message, args, user) {
     );
     if (player) {
       player.tokens = player.tokens + 1;
-      return message.channel.send(
+      message.channel.send(
         `<@${player.id}> took Income and now has **${player.tokens}**.`
       );
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "income",
+        user: person,
+      });
     } else {
       return message.channel.send("User not a player in game.");
     }

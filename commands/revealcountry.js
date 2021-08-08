@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -32,9 +30,14 @@ function execute(message, args, user) {
               games[message.channel.id].revealed.neutrals + 1;
           }
           player.revealed = player.country;
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> revealed themselves as **${player.country}**!`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "revealcountry",
+            user: person,
+          });
         } else {
           return message.channel.send(
             `<@${player.id}> is blocked from revealing their country.`

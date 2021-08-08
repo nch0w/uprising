@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (message.mentions.members.first()) {
       let person = message.author;
@@ -24,9 +22,14 @@ function execute(message, args, user) {
       if (player && target) {
         if (player.tokens > 7) {
           player.tokens = player.tokens - 8;
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> paid **8 tokens** to start an **Uprising** against <@${target.id}>, who must now drop a card!\nThey now have **${player.tokens}**.`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "uprising",
+            user: person,
+          });
         } else {
           return message.channel.send("Insufficient funds.");
         }

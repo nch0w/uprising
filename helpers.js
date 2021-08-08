@@ -18,15 +18,62 @@ module.exports.statusEmbed = (game) => {
   }\n\n${game.players
     .map(
       (p) =>
-        `${p.indicator}<@${p.id}> (${p.revealed}): ${p.cards.length} Cards, ${
-          p.tokens
-        } Tokens, ${p.counters} Counters, ${p.countrytokens} Blockers ${
-          p.entre.status
-        }\nDropped: ${p.dropped.join(", ")}`
+        `${p.death}${p.indicator}<@${p.id}> (${p.revealed}): ${
+          p.cards.length
+        } Cards, ${p.tokens} Tokens, ${p.counters} Counters, ${
+          p.countrytokens
+        } Blockers ${p.entre.status}${p.death}\nDropped: ${p.dropped.join(
+          ", "
+        )}`
     )
     .join("\n")}`;
 
   return new Discord.MessageEmbed()
     .setTitle("Uprising Status")
     .setDescription(description);
+};
+
+module.exports.commandsEmbed = (backup) => {
+  const description = `${backup
+    .map((b) => `<@${b.user.id}>: ${b.action}`)
+    .join("\n")}`;
+  return new Discord.MessageEmbed()
+    .setTitle("Command History")
+    .setDescription(description);
+};
+
+module.exports.deepCopier = (gamestate) => {
+  var deepCopy = {};
+  deepCopy.players = [];
+  for (const player of gamestate.players) {
+    deepCopy.players.push({
+      country: player.country,
+      revealed: player.revealed,
+      id: player.id,
+      user: player.user,
+      cards: JSON.parse(JSON.stringify(player.cards)),
+      specialcards: JSON.parse(JSON.stringify(player.specialcards)),
+      dropped: JSON.parse(JSON.stringify(player.dropped)),
+      tokens: player.tokens,
+      countrytokens: player.countrytokens,
+      counters: player.counters,
+      entre: JSON.parse(JSON.stringify(player.entre)),
+      indicator: player.indicator,
+      death: player.death,
+    });
+  }
+  deepCopy.revealed = JSON.parse(JSON.stringify(gamestate.revealed));
+  deepCopy.turn = gamestate.turn;
+  deepCopy.deck = JSON.parse(JSON.stringify(gamestate.deck));
+  deepCopy.trade = {
+    trader: gamestate.trade.trader,
+    card: JSON.parse(JSON.stringify(gamestate.trade.card)),
+    source: gamestate.trade.source,
+    counter: gamestate.trade.counter,
+  };
+  deepCopy.holding = gamestate.holding;
+  deepCopy.activist = gamestate.activist;
+  deepCopy.france = gamestate.france;
+  deepCopy.usa = gamestate.usa;
+  return deepCopy;
 };

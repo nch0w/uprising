@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (
       args.length > 1 &&
@@ -29,9 +27,14 @@ function execute(message, args, user) {
         if (target.tokens >= parseInt(args[0])) {
           player.tokens = player.tokens + parseInt(args[0]);
           target.tokens = target.tokens - parseInt(args[0]);
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> stole **${args[0]} tokens** from <@${target.id}>! They now have **${player.tokens}** and **${target.tokens}** respectively.`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "steal",
+            user: person,
+          });
         } else {
           return message.channel.send(
             `<@${target.id}> has insufficient funds.`

@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -19,7 +17,12 @@ function execute(message, args, user) {
       person.send(
         `Your starting hand is:\n${player.cards[0]}, ${player.cards[1]}, ${player.cards[2]}`
       );
-      return message.channel.send("Starting hand set!");
+      message.channel.send("Starting hand set!");
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "startinghand",
+        user: person,
+      });
     } else {
       return message.channel.send("User not a player in game.");
     }

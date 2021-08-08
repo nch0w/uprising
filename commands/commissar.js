@@ -1,10 +1,8 @@
 const { games, backup } = require("../models");
 const _ = require("underscore");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (message.mentions.members.first()) {
       let person = message.author;
@@ -45,7 +43,7 @@ function execute(message, args, user) {
           targetperson.send(
             `${player.id} peeked at your ${peeks[0]} and ${peeks[1]}.`
           );
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> claimed Commissar to peek at two of <@${target.id}>'s cards. <@${target.id}> must now discard and replace cards as <@${player.id}> sees fit.`
           );
         } else {
@@ -54,10 +52,15 @@ function execute(message, args, user) {
             `You peeked at ${peeks[0]}. Let <@${target.id}> know if they should discard this.`
           );
           targetperson.send(`${player.id} peeked at your ${peeks[0]}.`);
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> claimed Commissar to peek at one of <@${target.id}>'s cards. <@${target.id}> must now discard and replace this card if <@${player.id}> sees fit.`
           );
         }
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "commissar",
+          user: person,
+        });
       } else {
         return message.channel.send("User or target not a player in game.");
       }

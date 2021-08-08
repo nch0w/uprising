@@ -1,5 +1,6 @@
 const { games, backup, countryDeck } = require("../models");
 const _ = require("underscore");
+const { deepCopier } = require("../helpers");
 
 function capFirstLetterCountries(string) {
   if (["usa", "rok", "dprk", "uk"].includes(string.toLowerCase())) {
@@ -10,9 +11,6 @@ function capFirstLetterCountries(string) {
 }
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (
       args.length === games[message.channel.id].players.length &&
@@ -30,7 +28,12 @@ function execute(message, args, user) {
       games[message.channel.id].players = _.shuffle(
         games[message.channel.id].players
       );
-      return message.channel.send("Countries set!");
+      message.channel.send("Countries set!");
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "setcountries",
+        user: message.author,
+      });
     } else {
       return message.channel.send("Invalid parameters.");
     }

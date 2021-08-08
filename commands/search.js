@@ -1,14 +1,12 @@
 const { games, backup, defaultDeck } = require("../models");
 const _ = require("underscore");
+const { deepCopier } = require("../helpers");
 
 function capFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -35,7 +33,7 @@ function execute(message, args, user) {
         } else {
           const newcard = games[message.channel.id].deck.splice(idx, 1);
           player.cards.push(newcard);
-          message.channel.send(`${newcard} found in deck!`);
+          message.channel.send(`**${newcard}** found in deck!`);
           person.send(
             `You drew a ${newcard}.\nYour hand is now: ${player.cards.join(
               ", "
@@ -45,7 +43,12 @@ function execute(message, args, user) {
         games[message.channel.id].deck = _.shuffle(
           games[message.channel.id].deck
         );
-        return message.channel.send("Deck shuffled.");
+        message.channel.send("Deck shuffled.");
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "search",
+          user: person,
+        });
       } else {
         return message.channel.send("Invalid parameters.");
       }

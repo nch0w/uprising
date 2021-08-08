@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (message.mentions.members.first()) {
       let person = message.author;
@@ -25,9 +23,14 @@ function execute(message, args, user) {
         if (player.tokens >= parseInt(args[0]) && target.revealed === "?") {
           player.tokens = player.tokens - parseInt(args[0]);
           target.countrytokens = target.countrytokens + parseInt(args[0]);
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> claimed Diplomat to place **${args[0]} tokens** on <@${target.id}>'s Country Card, blocking it from being revealed.\nThey now have **${player.tokens}**.`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "diplomat",
+            user: person,
+          });
         } else {
           return message.channel.send("Invalid parameters.");
         }

@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (message.mentions.members.first()) {
       let person = message.author;
@@ -38,13 +36,18 @@ function execute(message, args, user) {
               peekLimit - games[message.channel.id].usa
             } peeks left.`
           );
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> invoked the power of America to peek at <@${
               target.id
             }>'s country! They have ${
               peekLimit - games[message.channel.id].usa
             } peeks left.`
           );
+          backup[message.channel.id].push({
+            state: deepCopier(games[message.channel.id]),
+            action: "usa",
+            user: person,
+          });
         } else {
           return message.channel.send("Invalid parameters.");
         }

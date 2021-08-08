@@ -1,13 +1,11 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function capFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -26,6 +24,9 @@ function execute(message, args, user) {
       if (args.length > 0 && player.cards.includes(card)) {
         idx = player.cards.indexOf(card);
         player.dropped.push(player.cards.splice(idx, 1));
+        if (player.cards.length === 0) {
+          player.death = "~~";
+        }
         if (player.specialcards.length > 0) {
           person.send(
             `Your hand is now: ${player.cards.join(
@@ -35,9 +36,12 @@ function execute(message, args, user) {
         } else {
           person.send(`Your hand is now: ${player.cards.join(", ")}`);
         }
-        return message.channel.send(
-          `<@${person.id}> has dropped a **${card}**.`
-        );
+        message.channel.send(`<@${person.id}> has dropped a **${card}**.`);
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "dropcard",
+          user: person,
+        });
       } else {
         return message.channel.send("Incorrect parameters.");
       }

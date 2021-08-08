@@ -28,6 +28,10 @@ function execute(message, args, user) {
       value: "Show the current game status",
     },
     {
+      name: `${PREFIX}backup|bu`,
+      value: "Show the history of actions taken",
+    },
+    {
       name: `${PREFIX}endgame|eg`,
       value: "End the game",
     }
@@ -116,12 +120,21 @@ function execute(message, args, user) {
         value: "Use Diplomat's Ability #2",
       },
       {
+        name: `${PREFIX}draw|d cc`,
+        value:
+          "Draw a card from the deck to your Country Card (Russia & ROK only)",
+      },
+      {
         name: `${PREFIX}entrepreneur|e`,
         value: "Use Entrepreneur's Ability #1",
       },
       {
         name: `${PREFIX}france|fr {number} {@target}`,
         value: "Use France's token transfer (Europe only)",
+      },
+      {
+        name: `${PREFIX}minister|m`,
+        value: "Use Minister's Ability #1",
       },
       {
         name: `${PREFIX}peace|p`,

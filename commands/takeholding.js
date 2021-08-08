@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (
       args.length > 0 &&
@@ -21,11 +19,11 @@ function execute(message, args, user) {
         games[message.channel.id].holding =
           games[message.channel.id].holding - parseInt(args[0]);
         if (parseInt(args[0]) >= 0) {
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> recieved **${args[0]} token(s)** from the Holding Area and now has **${player.tokens}**.`
           );
         } else {
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> paid **${-parseInt(
               args[0]
             )} token(s)** into the Holding Area and now has **${
@@ -33,6 +31,11 @@ function execute(message, args, user) {
             }**.`
           );
         }
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "takeholding",
+          user: person,
+        });
       } else {
         return message.channel.send("User not a player in game.");
       }

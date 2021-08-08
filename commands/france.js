@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (message.mentions.members.first()) {
       let person = message.author;
@@ -32,6 +30,9 @@ function execute(message, args, user) {
           args.length > 1 &&
           parseInt(args[0]) > 0 &&
           parseInt(args[0]) <= xferLimit - games[message.channel.id].france &&
+          games[message.channel.id].players.find(
+            (p) => p.cards.length > 0 && p.revealed === "France"
+          ) &&
           ["USA", "UK", "Germany", "France", "Italy"].includes(
             player.revealed
           ) &&
@@ -42,9 +43,14 @@ function execute(message, args, user) {
             target.tokens = target.tokens + parseInt(args[0]);
             games[message.channel.id].france =
               games[message.channel.id].france + parseInt(args[0]);
-            return message.channel.send(
+            message.channel.send(
               `<@${player.id}> transferred **${args[0]} tokens** to <@${target.id}>! They now have **${player.tokens}** and **${target.tokens}** respectively.`
             );
+            backup[message.channel.id].push({
+              state: deepCopier(games[message.channel.id]),
+              action: "france",
+              user: person,
+            });
           } else {
             return message.channel.send(
               `<@${target.id}> has insufficient funds.`

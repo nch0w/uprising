@@ -1,5 +1,6 @@
 const { games, backup, defaultDeck } = require("../models");
 const _ = require("underscore");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
   if (message.channel.id in games) {
@@ -10,15 +11,19 @@ function execute(message, args, user) {
       revealed: { asians: 0, europeans: 0, neutrals: 0 },
       turn: 0,
       deck: _.shuffle(defaultDeck),
-      trade: { trader: [], card: [], source: "", counter: 0 },
+      trade: { trader: {}, card: [], source: "", counter: 0 },
       holding: 0,
       activist: 0,
       france: 0,
       usa: 0,
     };
-    backup[message.channel.id] = JSON.parse(
-      JSON.stringify(games[message.channel.id])
-    );
+    backup[message.channel.id] = [
+      {
+        state: deepCopier(games[message.channel.id]),
+        action: "newgame",
+        user: message.author,
+      },
+    ];
     return message.channel.send("Game created.");
   }
 }

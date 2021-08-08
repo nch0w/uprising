@@ -1,15 +1,18 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (
       games[message.channel.id].turn === 0 &&
       games[message.channel.id].players[0].indicator === ""
     ) {
       games[message.channel.id].players[0].indicator = "• ";
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "nextturn",
+        user: message.author,
+      });
       return message.channel.send(
         `The game of Uprising begins with <@${
           games[message.channel.id].players[0].id
@@ -65,11 +68,16 @@ function execute(message, args, user) {
     games[message.channel.id].players[
       games[message.channel.id].turn
     ].indicator = "• ";
-    return message.channel.send(
+    message.channel.send(
       `<@${
         games[message.channel.id].players[games[message.channel.id].turn].id
       }>'s turn!`
     );
+    backup[message.channel.id].push({
+      state: deepCopier(games[message.channel.id]),
+      action: "nextturn",
+      user: message.author,
+    });
   } else {
     return message.channel.send("No game to progress to the next turn in.");
   }

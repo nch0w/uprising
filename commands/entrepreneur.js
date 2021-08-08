@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     let person = message.author;
     if (message.mentions.members.first()) {
@@ -16,9 +14,14 @@ function execute(message, args, user) {
       player.tokens = player.tokens + 5;
       games[message.channel.id].holding = games[message.channel.id].holding + 1;
       player.entre = { status: "(Entrepreneured)", count: 1 };
-      return message.channel.send(
+      message.channel.send(
         `<@${player.id}> claimed Entrepreneur and recieved **5 tokens**, placing **1 token** into the Holding Area at the same time!\nThey now have **${player.tokens}**.`
       );
+      backup[message.channel.id].push({
+        state: deepCopier(games[message.channel.id]),
+        action: "entrepreneur",
+        user: person,
+      });
     } else {
       return message.channel.send("User not a player in game.");
     }

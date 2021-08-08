@@ -1,13 +1,16 @@
 const { games, backup } = require("../models");
 const _ = require("underscore");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     games[message.channel.id].deck = _.shuffle(games[message.channel.id].deck);
-    return message.channel.send("Deck shuffled.");
+    message.channel.send("Deck shuffled.");
+    backup[message.channel.id].push({
+      state: deepCopier(games[message.channel.id]),
+      action: "shuffle",
+      user: message.author,
+    });
   } else {
     return message.channel.send("No game to shuffle a deck in.");
   }

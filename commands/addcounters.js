@@ -1,9 +1,7 @@
 const { games, backup } = require("../models");
+const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
-  backup[message.channel.id] = JSON.parse(
-    JSON.stringify(games[message.channel.id])
-  );
   if (message.channel.id in games) {
     if (args.length > 0 && parseInt(args[0]) !== 0) {
       let person = message.author;
@@ -16,16 +14,21 @@ function execute(message, args, user) {
       if (player) {
         player.counters = player.counters + parseInt(args[0]);
         if (parseInt(args[0]) >= 0) {
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> recieved **${args[0]} counters(s)** and now has **${player.counters}**.`
           );
         } else {
-          return message.channel.send(
+          message.channel.send(
             `<@${player.id}> parted with **${-parseInt(
               args[0]
-            )} token(s)** and now has **${player.counters}**.`
+            )} counter(s)** and now has **${player.counters}**.`
           );
         }
+        backup[message.channel.id].push({
+          state: deepCopier(games[message.channel.id]),
+          action: "addcounters",
+          user: person,
+        });
       } else {
         return message.channel.send("User not a player in game.");
       }

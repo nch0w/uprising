@@ -1,4 +1,4 @@
-const { games, cardInfo } = require("../models");
+const { cardInfo } = require("../models");
 
 function capFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
