@@ -59,7 +59,7 @@ const countryDeck = [
 ];
 
 const cardInfo = {
-  USA: "**United States of America** (Trans-Continental Security Alliance - Support):\nYou can declare your alliance/country at the start of the game(and only at the start of the game) to peek at players’ country cards (scales with player count: 0 for 2 Europeans in game, 1 for 3, 2 for 4-5). (Use ;usa {target} for this.)\nDuring your actions, after claiming a card, you may choose someone to take the effects of that card instead of yourself. Your Blue Strip card claims may not be challenged.",
+  USA: "**United States of America** (Trans-Continental Security Alliance - Support):\nYou can declare your alliance/country at the start of the game(and only at the start of the game) to peek at players’ country cards (scales with player count: 0 for 2 Europeans in game, 1 for 3, 2 for 4-5). (Use ;usa {target} for this.)\nDuring your actions, after claiming a card, you may choose someone to take the effects of that card instead of yourself. Your Blue Strip card claims may not be challenged.(Entrepreneur limitations stay on US)",
   UK: "**United Kingdom** (Trans-Continental Security Alliance - Utility):\nYou can reveal your country before or after any turn. Revealing your country activates this skill:\nYou may target 2 players with any one of these abilities. You may choose 1 person to lose a life . You may choose 1 person to discard as many tokens as you have back into the Reserve. You may choose 1 person to gain a life. If you chose a dead player, they revive with ½ of the tokens they died with. You may target the same player twice. If Japan is revealed, you may not remove Japan’s tokens.",
   Germany:
     "**Germany** (Trans-Continental Security Alliance - Offense):\nYou may reveal your country to gain 2 counters (;ac 2). When performing an Uprising, if successful, you may spend one counter and 2 tokens to force the opponent to lose one more life (;ac -1, ;at -2). Whenever you kill someone without the use of counters, gain a counter (;ac 1).",
@@ -86,7 +86,7 @@ const cardInfo = {
   President:
     "**President** (Blue Strip, 2 in a deck):\nAbility #1: You may draw up to X+2 tokens from the Reserve (;at {X+2}). X is defined as the amount of alive players other than yourself divided by 2 rounded up. Starting from the player on your left (going clockwise), take tokens from the Reserve and give [X+1] players 1 token each (;at 1 {target}).",
   Entrepreneur:
-    "**Entrepreneur** (Blue Strip, 3 in a deck):\nAbility #1: Draw 5 tokens from the Reserve. Place 1 token from the Reserve into the Holding Area. You may not claim Blue Strip, Sentry Guard, General or Income until after your next turn action. (Use ;entrepreneur)\nAbility #2: Block Scout targeted at you (Passive)",
+    "**Entrepreneur** (Blue Strip, 3 in a deck):\nAbility #1: Draw 5 tokens from the Reserve. Place 1 token from the Reserve into the Holding Area. The person claiming Entrepreneur may not claim Blue Strip, Sentry Guard, General or Income until after your next turn action. (Use ;entrepreneur)\nAbility #2: Block Scout targeted at you (Passive)",
   Politician:
     "**Politician** (Red Strip, 2 in a deck):\nAbility #1 (Passive): Pay 6 tokens to the Reserve to block Bounty Hunter targeted at you (;at -6).\nAbility #2 (Passive): Pay 9 tokens to the Reserve to block Uprising targeted at you (;at -9).",
   Medic:
