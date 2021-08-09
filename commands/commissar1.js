@@ -58,7 +58,7 @@ function execute(message, args, user) {
         }
         backup[message.channel.id].push({
           state: deepCopier(games[message.channel.id]),
-          action: "commissar",
+          action: "commissar1",
           user: person,
         });
       } else {
@@ -73,7 +73,7 @@ function execute(message, args, user) {
 }
 
 module.exports = {
-  name: "commissar",
-  aliases: ["cm"],
+  name: "commissar1",
+  aliases: ["cm1"],
   execute,
 };

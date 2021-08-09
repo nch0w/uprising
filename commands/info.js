@@ -112,8 +112,12 @@ function execute(message, args, user) {
         value: "Use Activist's Ability #1",
       },
       {
-        name: `${PREFIX}commissar|cm`,
+        name: `${PREFIX}commissar1|cm1`,
         value: "Use Commissar's Ability #1",
+      },
+      {
+        name: `${PREFIX}commissar2|cm2 {@target} {@target}`,
+        value: "Use Commissar's Ability #2",
       },
       {
         name: `${PREFIX}diplomat|dm {number} {@target}`,
@@ -133,6 +137,10 @@ function execute(message, args, user) {
         value: "Use France's token transfer (Europe only)",
       },
       {
+        name: `${PREFIX}medic|md {card} {@target}`,
+        value: "Use Medic's Ability #2 (specify the card in your hand)",
+      },
+      {
         name: `${PREFIX}minister|m`,
         value: "Use Minister's Ability #1",
       },
@@ -143,6 +151,10 @@ function execute(message, args, user) {
       {
         name: `${PREFIX}search|js {card}`,
         value: "Search the deck for a card (Japan only)",
+      },
+      {
+        name: `${PREFIX}switzerland|sw {@target}`,
+        value: "Peek at another player's country and cards (Switzerland only)",
       },
       {
         name: `${PREFIX}trade|t {card number|cc}`,

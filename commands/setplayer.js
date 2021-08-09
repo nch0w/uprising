@@ -23,6 +23,7 @@ function execute(message, args, user) {
         countrytokens: 0,
         counters: 0,
         entre: { status: "", count: 0 },
+        comm: { status: "", count: 0 },
         indicator: "",
         death: "",
       });

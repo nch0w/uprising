@@ -40,6 +40,18 @@ function execute(message, args, user) {
         games[message.channel.id].turn
       ].entre.status = "";
     }
+    if (
+      games[message.channel.id].players[games[message.channel.id].turn].comm
+        .count > 0
+    ) {
+      games[message.channel.id].players[
+        games[message.channel.id].turn
+      ].comm.count = 0;
+    } else {
+      games[message.channel.id].players[
+        games[message.channel.id].turn
+      ].comm.status = "";
+    }
     games[message.channel.id].turn = games[message.channel.id].turn + 1;
     if (
       games[message.channel.id].turn ===

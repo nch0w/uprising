@@ -22,9 +22,9 @@ module.exports.statusEmbed = (game) => {
           p.cards.length
         } Cards, ${p.tokens} Tokens, ${p.counters} Counters, ${
           p.countrytokens
-        } Blockers ${p.entre.status}${p.death}\nDropped: ${p.dropped.join(
-          ", "
-        )}`
+        } Blockers ${p.entre.status}${p.comm.status}${
+          p.death
+        }\nDropped: ${p.dropped.join(", ")}`
     )
     .join("\n")}`;
 
@@ -58,6 +58,7 @@ module.exports.deepCopier = (gamestate) => {
       countrytokens: player.countrytokens,
       counters: player.counters,
       entre: JSON.parse(JSON.stringify(player.entre)),
+      comm: JSON.parse(JSON.stringify(player.comm)),
       indicator: player.indicator,
       death: player.death,
     });

@@ -25,6 +25,17 @@ function execute(message, args, user) {
         let idx = player.cards.indexOf(card);
         if (idx === -1) {
           return message.channel.send("Invalid card name.");
+        } else if (
+          args[0].toLowerCase() === "cc" &&
+          player.specialcards.length > 0
+        ) {
+          card = player.specialcards.pop();
+          games[message.channel.id].deck.push(card);
+          const newcard = games[message.channel.id].deck.shift();
+          player.cards.push(newcard);
+          message.channel.send(
+            `<@${person.id}> reveals that they possess a **${card}** on their Country Card! They return this card and draw a new one.`
+          );
         } else {
           games[message.channel.id].deck.push(player.cards.splice(idx, 1));
           const newcard = games[message.channel.id].deck.shift();
