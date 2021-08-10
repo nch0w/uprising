@@ -4,7 +4,7 @@ const { PREFIX } = require("../env");
 function execute(message, args, user) {
   const setup = new Discord.MessageEmbed().setTitle("Setup Commands").addFields(
     {
-      name: `${PREFIX}newgame|ng`,
+      name: `${PREFIX}newgame|ng {@mods}`,
       value: "Start a new game",
     },
     {
@@ -26,6 +26,10 @@ function execute(message, args, user) {
     {
       name: `${PREFIX}status`,
       value: "Show the current game status",
+    },
+    {
+      name: `${PREFIX}gamestate|gs`,
+      value: "Show the current full gamestate (Mods only)",
     },
     {
       name: `${PREFIX}backup|bu`,

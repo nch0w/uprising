@@ -31,7 +31,7 @@ function execute(message, args, user) {
         if (idx === -1) {
           message.channel.send("Card not found in deck.");
         } else {
-          const newcard = games[message.channel.id].deck.splice(idx, 1);
+          const newcard = games[message.channel.id].deck.splice(idx, 1)[0];
           player.cards.push(newcard);
           message.channel.send(`**${newcard}** found in deck!`);
           person.send(

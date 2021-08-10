@@ -3,6 +3,7 @@ const { deepCopier } = require("../helpers");
 
 function execute(message, args, user) {
   if (message.channel.id in games) {
+    console.log(games[message.channel.id]);
     if (
       games[message.channel.id].turn === 0 &&
       games[message.channel.id].players[0].indicator === ""

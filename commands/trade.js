@@ -34,7 +34,7 @@ function execute(message, args, user) {
             (element) => element.user === games[message.channel.id].trade.trader
           );
           if (parseInt(args[0])) {
-            cardtwo = player.cards.splice(parseInt(args[0]) - 1, 1);
+            cardtwo = player.cards.splice(parseInt(args[0]) - 1, 1)[0];
             player.cards.push(cardone);
           } else {
             cardtwo = player.specialcards.pop();
@@ -62,12 +62,12 @@ function execute(message, args, user) {
           trader.user.send(`You have traded a ${cardone} for a ${cardtwo}.`);
           if (trader.specialcards.length > 0) {
             trader.user.send(
-              `Your hand is now: ${player.cards.join(
+              `Your hand is now: ${trader.cards.join(
                 ", "
-              )}\nThe card on your Country Card is ${player.specialcards}`
+              )}\nThe card on your Country Card is ${trader.specialcards}`
             );
           } else {
-            trader.user.send(`Your hand is now: ${player.cards.join(", ")}`);
+            trader.user.send(`Your hand is now: ${trader.cards.join(", ")}`);
           }
           message.channel.send(
             `The card trade between <@${trader.id}> and <@${player.id}> is complete!\nThey each gained **1 token** and now have ${trader.tokens} and ${player.tokens}.`
@@ -75,7 +75,7 @@ function execute(message, args, user) {
         } else {
           let card;
           if (parseInt(args[0])) {
-            card = player.cards.splice(parseInt(args[0]) - 1, 1);
+            card = player.cards.splice(parseInt(args[0]) - 1, 1)[0];
             games[message.channel.id].trade.source = "hand";
           } else {
             card = player.specialcards.pop();

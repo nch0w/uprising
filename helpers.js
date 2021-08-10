@@ -4,32 +4,76 @@ const _ = require("underscore");
 module.exports.statusEmbed = (game) => {
   const description = `Countries in Play: ${_.shuffle(
     game.players.map((p) => p.country)
-  ).join(", ")}\nHolding Area: ${game.holding}\nActivists: ${
-    game.activist
-  }/4\nROK Trades: ${game.trade.counter}/${Math.min(
-    Math.max(game.revealed.asians - 2, 1),
-    2
-  )}\nFrance Transfers: ${game.france}/${
-    game.players.filter(
-      (p) =>
-        ["USA", "UK", "Germany", "Italy"].includes(p.revealed) &&
-        p.cards.length > 0
-    ).length * 2
+  ).join(", ")}\nHolding Area: ${game.holding}\nActivists: ${game.activist}/4${
+    game.players.map((p) => p.revealed).includes("ROK")
+      ? `\nROK Trades: ${game.trade.counter}/${Math.min(
+          Math.max(game.revealed.asians - 2, 1),
+          2
+        )}`
+      : ""
+  }${
+    game.players.map((p) => p.revealed).includes("France")
+      ? `\nFrance Transfers: ${game.france}/${
+          game.players.filter(
+            (p) =>
+              ["USA", "UK", "Germany", "Italy"].includes(p.revealed) &&
+              p.cards.length > 0
+          ).length * 2
+        }`
+      : ""
   }\n\n${game.players
     .map(
       (p) =>
         `${p.death}${p.indicator}<@${p.id}> (${p.revealed}): ${
           p.cards.length
-        } Cards, ${p.tokens} Tokens, ${p.counters} Counters, ${
-          p.countrytokens
-        } Blockers ${p.entre.status}${p.comm.status}${
-          p.death
-        }\nDropped: ${p.dropped.join(", ")}`
+        } Cards, ${p.tokens} Tokens, ${
+          p.counters > 0 ? `${p.counters} Counters, ` : ""
+        }${p.countrytokens > 0 ? `${p.countrytokens} Blockers, ` : ""}${
+          p.entre.status
+        }${p.comm.status}${p.death}\nDropped: ${p.dropped.join(", ")}`
     )
     .join("\n")}`;
 
   return new Discord.MessageEmbed()
     .setTitle("Uprising Status")
+    .setDescription(description);
+};
+
+module.exports.gamestateEmbed = (game) => {
+  const description = `Countries in Play: ${game.players
+    .map((p) => p.country)
+    .join(", ")}\nHolding Area: ${game.holding}\nActivists: ${game.activist}/4${
+    game.players.map((p) => p.revealed).includes("ROK")
+      ? `\nROK Trades: ${game.trade.counter}/${Math.min(
+          Math.max(game.revealed.asians - 2, 1),
+          2
+        )}`
+      : ""
+  }${
+    game.players.map((p) => p.revealed).includes("France")
+      ? `\nFrance Transfers: ${game.france}/${
+          game.players.filter(
+            (p) =>
+              ["USA", "UK", "Germany", "Italy"].includes(p.revealed) &&
+              p.cards.length > 0
+          ).length * 2
+        }`
+      : ""
+  }\n\n${game.players
+    .map(
+      (p) =>
+        `${p.death}${p.indicator}<@${p.id}> ${p.country} (${p.revealed}) ${
+          p.entre.status
+        }${p.comm.status}${p.death}\nHand: ${p.cards.join(", ")} CC: ${
+          p.specialcards
+        }\n${p.tokens} Tokens, ${p.counters} Counters, ${
+          p.countrytokens
+        } Blockers\nDropped: ${p.dropped.join(", ")}`
+    )
+    .join("\n\n")}\n\nDeck: ${game.deck.join(", ")}`;
+
+  return new Discord.MessageEmbed()
+    .setTitle("Uprising Gamestate")
     .setDescription(description);
 };
 
@@ -63,6 +107,7 @@ module.exports.deepCopier = (gamestate) => {
       death: player.death,
     });
   }
+  deepCopy.mods = gamestate.mods;
   deepCopy.revealed = JSON.parse(JSON.stringify(gamestate.revealed));
   deepCopy.turn = gamestate.turn;
   deepCopy.deck = JSON.parse(JSON.stringify(gamestate.deck));

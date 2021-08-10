@@ -23,7 +23,7 @@ function execute(message, args, user) {
     if (player) {
       if (args.length > 0 && player.cards.includes(card)) {
         idx = player.cards.indexOf(card);
-        player.dropped.push(player.cards.splice(idx, 1));
+        player.dropped.push(player.cards.splice(idx, 1)[0]);
         if (player.cards.length === 0) {
           player.death = "~~";
         }

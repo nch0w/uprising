@@ -30,7 +30,7 @@ function execute(message, args, user) {
           });
         } else {
           return message.channel.send(
-            `<@${player.id} not allowed to draw to Country Card.`
+            `<@${player.id}> not allowed to draw to Country Card.`
           );
         }
       } else {

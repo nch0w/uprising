@@ -8,6 +8,7 @@ function execute(message, args, user) {
   } else {
     games[message.channel.id] = {
       players: [],
+      mods: [],
       revealed: { asians: 0, europeans: 0, neutrals: 0 },
       turn: 0,
       deck: _.shuffle(defaultDeck),
@@ -17,6 +18,9 @@ function execute(message, args, user) {
       france: 0,
       usa: 0,
     };
+    if (message.mentions.users.array().length > 0) {
+      games[message.channel.id].mods = message.mentions.users.array();
+    }
     backup[message.channel.id] = [
       {
         state: deepCopier(games[message.channel.id]),

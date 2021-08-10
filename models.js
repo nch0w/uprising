@@ -107,6 +107,14 @@ const cardInfo = {
     "**Activist** (Green Strip, 2 in a deck):\nAbility #1 (Passive): Take a free action if someone else lost a life and you did not just take an action.(Use ;activist)\nAbility #2: (Passive) Block Bounty Hunter.\nYou may not Activist off a loss of life resulting directly from a free action. (Challenges are fine) The table may only claim Ability #1 4 times in a round.",
   Commissar:
     "**Commissar** (Green Strip, 2 in a deck):\nAbility #1: Target player shows you a card from his hand at random. You may choose to discard it, if you do, he draws however many cards you discarded. If you and the target player are revealed allies, take 2 cards instead. (Use ;commissar1 for this.) (Blocked by Bounty Hunter)\nAbility #2: Pay 2 tokens to the Reserve to target two players + yourself. Target players (including yourself) may not draw tokens from the Reserve during their next action. (use ;commissar2 {target} {target} for this.) (Blocked by Bounty Hunter)",
+  Income:
+    "**Income** (Cannot be Challenged):\nDraw 1 token from the Reserve. (Use ;income)",
+  Funding:
+    "**Funding** (Cannot be Challenged):\nPay 1 token to the Holding Area. Draw 1 card from the Deck into your hand, then put any card from your hand back into the deck. (Use ;funding)",
+  Stockpile:
+    "**Stockpile**:\nDraw all tokens from the Holding Area.\nYou may not Stockpile if you have Blue Strip cards in your hand. (Use ;stockpile)",
+  Uprising:
+    "**Uprising** (Cannot be Challenged):\nPay 8 tokens to the Reserve to target a player. Target player loses a life. (Use ;uprising {target})",
 };
 
 module.exports = {

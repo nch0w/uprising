@@ -37,7 +37,7 @@ function execute(message, args, user) {
             `<@${person.id}> reveals that they possess a **${card}** on their Country Card! They return this card and draw a new one.`
           );
         } else {
-          games[message.channel.id].deck.push(player.cards.splice(idx, 1));
+          games[message.channel.id].deck.push(player.cards.splice(idx, 1)[0]);
           const newcard = games[message.channel.id].deck.shift();
           player.cards.push(newcard);
           message.channel.send(

@@ -35,7 +35,9 @@ function execute(message, args, user) {
             if (idx === -1) {
               message.channel.send("Invalid card name.");
             } else {
-              games[message.channel.id].deck.push(player.cards.splice(idx, 1));
+              games[message.channel.id].deck.push(
+                player.cards.splice(idx, 1)[0]
+              );
               person.send(`You have returned a ${card}.`);
               message.channel.send(`<@${person.id}> has returned a card.`);
             }

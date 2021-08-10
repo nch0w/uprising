@@ -35,7 +35,7 @@ function execute(message, args, user) {
           let idx = player.cards.indexOf(card);
           droppedCard = target.dropped.pop();
           player.cards.push(droppedCard);
-          target.dropped.push(player.cards.splice(idx, 1));
+          target.dropped.push(player.cards.splice(idx, 1)[0]);
           message.channel.send(
             `<@${player.id}> claimed Medic and paid **2 tokens** to take <@${target.id}>'s dropped **${droppedCard}**, replacing it with a **${card}** from their hand.\nThey now have **${player.tokens}**.`
           );
