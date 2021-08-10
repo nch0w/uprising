@@ -65,7 +65,7 @@ function execute(message, args, user) {
       },
       {
         name: `${PREFIX}returncards|rc {cards}`,
-        value: "Return cards to the bottom of the deck",
+        value: "Return cards to the bottom of the deck (works in DMs)",
       },
       {
         name: `${PREFIX}revealcards`,
